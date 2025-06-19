@@ -1,0 +1,19 @@
+﻿using APIVendas.BaseDados.Models;
+using APIVendas.Services.DTOs;
+using AutoMapper;
+
+namespace APIVendas.Mappings
+{
+    public class DomainToDTOMapping : Profile
+    {
+        public DomainToDTOMapping()
+        {
+            CreateMap<CriarCategoriaDTO, Categoria>().ReverseMap();
+            CreateMap<Categoria, CategoriaDTO>().ReverseMap();
+
+            CreateMap<Produto, ProdutoDTO>().ReverseMap();
+            CreateMap<CriarProdutoDTO, Produto>().ReverseMap();
+
+        }
+    }
+}

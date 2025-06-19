@@ -1,0 +1,20 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.vsp
+*.vsidx
+*.dbmdl
+*.bak
+*.cache
+*.log
+*.tmp
+
+# Build output
+bin/
+obj/
+
+# Others
+*.swp
+*.DS_Store
+Thumbs.db

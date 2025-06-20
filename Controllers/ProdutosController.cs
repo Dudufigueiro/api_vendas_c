@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using APIVendas.Services.Exceptions;
+using Microsoft.AspNetCore.Http;
 
 namespace APIVendas.Controllers
 {

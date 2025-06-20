@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using APIVendas.Services.Exceptions;
+using Microsoft.AspNetCore.Http;
 
 namespace APIVendas.Controllers
 {
@@ -26,6 +27,7 @@ namespace APIVendas.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<CategoriaDTO>> ObterTodos()
         {
             var categorias = _categoriaService.ObterTodos();
@@ -33,6 +35,8 @@ namespace APIVendas.Controllers
         }
 
         [HttpGet("{id}")] // get que busca pelo id
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CategoriaDTO> GetById(int id)
         {
             var categoria = _categoriaService.ObterPorId(id);
@@ -45,6 +49,8 @@ namespace APIVendas.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CategoriaDTO> Criar([FromBody] CriarCategoriaDTO dto)
         {
             try
@@ -54,12 +60,13 @@ namespace APIVendas.Controllers
             }
             catch (System.Exception ex)
             {
-                // Aqui você pode melhorar para retornar mensagens mais detalhadas se desejar
                 return BadRequest(new { erro = ex.Message });
             }
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Remover(int id)
         {
             try

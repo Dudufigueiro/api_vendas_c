@@ -6,7 +6,7 @@ namespace APIVendas.Services.DTOs
     {
         public int Codproduto { get; set; }
         public string Nome { get; set; }
-        public decimal Preco { get; set; }
+        public double Preco { get; set; }
         public int Qntestoque { get; set; }
         public int Idcategoria { get; set; }
     }
@@ -15,7 +15,7 @@ namespace APIVendas.Services.DTOs
         public int Idproduto { get; set; }
         public int Codproduto { get; set; }
         public string Nome { get; set; }
-        public decimal Preco { get; set; }
+        public double Preco { get; set; }
         public int Qntestoque {  get; set; }
         public int Idcategoria { get; set; }
     }

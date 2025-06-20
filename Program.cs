@@ -20,6 +20,7 @@ namespace APIVendas
             builder.Services.AddAutoMapper(typeof(DomainToDTOMapping));
             builder.Services.AddScoped<CategoriasService>();
             builder.Services.AddScoped<ProdutosServices>();
+            builder.Services.AddScoped<PessoasServices>();
             builder.Services.AddSingleton<ApiDbContext>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

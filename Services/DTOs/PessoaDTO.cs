@@ -11,4 +11,13 @@ namespace APIVendas.Services.DTOs
         public string Telefone { get; set; }
         public int Codpessoa { get; set; }
     }
+
+    public class CriarPessoaDTO
+    {
+        public string Nome { get; set; }
+        public string Email { get; set; }
+        public string Datanasc { get; set; }
+        public string Telefone { get; set; }
+        public int Codpessoa { get; set; }
+    }
 }

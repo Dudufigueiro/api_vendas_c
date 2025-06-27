@@ -35,5 +35,43 @@ namespace APIVendas.Services
 
             return _mapper.Map<PessoaDTO>(pessoa);
         }
+
+        public PessoaDTO Criar(CriarPessoaDTO dto)
+        {
+            PessoaValidation.ValidouCriarPessoa(dto);
+
+            var novaPessoa = _mapper.Map<Pessoa>(dto);
+
+            _dbcontext.Pessoas.Add(novaPessoa);
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<PessoaDTO>(novaPessoa);
+        }
+
+        public void Remover(int id)
+        {
+            var pessoa = _dbcontext.Pessoas.FirstOrDefault(c => c.Idpessoa == id);
+            if (pessoa == null)
+                throw new Exception($"Pessoa com ID {id} não encontrado.");
+
+            _dbcontext.Pessoas.Remove(pessoa);
+            _dbcontext.SaveChanges();
+        }
+
+        public PessoaDTO Atualizar(CriarPessoaDTO dto, int id)
+        {
+            PessoaValidation.ValidouCriarPessoa(dto);
+
+            var pessoa = _dbcontext.Pessoas.FirstOrDefault(c => c.Idpessoa == id);
+
+            if (pessoa == null)
+                throw new NotFoundException("Pessoa não encontrada");
+
+            _mapper.Map(dto, pessoa);
+
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<PessoaDTO>(pessoa);
+        }
     }
 }

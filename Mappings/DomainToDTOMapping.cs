@@ -18,7 +18,7 @@ namespace APIVendas.Mappings
             CreateMap<CriarPessoaDTO, Pessoa>().ReverseMap();
 
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
-            CreateMap<CriarClienteDTO, ClienteDTO>().ReverseMap();
+            CreateMap<CriarClienteDTO, Cliente>().ReverseMap();
         }
     }
 }

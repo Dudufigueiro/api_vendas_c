@@ -36,6 +36,20 @@ namespace APIVendas.Services
             return _mapper.Map<ClienteDTO>(cliente);
         }
 
+        public ClienteDTO Criar(CriarClienteDTO dto)
+        {
+            ClienteValidation.ValidouCriarCliente(dto);
+
+            var novoCliente = _mapper.Map<Cliente>(dto);
+
+            novoCliente.Datacadastro = DateOnly.FromDateTime(DateTime.Now);
+
+            _dbcontext.Clientes.Add(novoCliente);
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<ClienteDTO>(novoCliente);
+        }
+
         public void Remover(int id)
         {
             var cliente = _dbcontext.Clientes.FirstOrDefault(c => c.Idcliente == id);
@@ -44,6 +58,22 @@ namespace APIVendas.Services
 
             _dbcontext.Clientes.Remove(cliente);
             _dbcontext.SaveChanges();
+        }
+
+        public ClienteDTO Atualizar(CriarClienteDTO dto, int id)
+        {
+            ClienteValidation.ValidouCriarCliente(dto);
+
+            var cliente = _dbcontext.Clientes.FirstOrDefault(c => c.Idcliente == id);
+
+            if (cliente == null)
+                throw new NotFoundException("Cliente não encontrado");
+
+            _mapper.Map(dto, cliente);
+
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<ClienteDTO>(cliente);
         }
     }
 }

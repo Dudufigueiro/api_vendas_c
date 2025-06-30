@@ -46,6 +46,20 @@ namespace APIVendas.Controllers
             return Ok(cliente);
         }
 
+        [HttpPost]
+        public ActionResult<ClienteDTO> Criar([FromBody] CriarClienteDTO dto)
+        {
+            try
+            {
+                var clienteCriado = _clientesServices.Criar(dto);
+                return CreatedAtAction(nameof(ObterTodos), new { id = clienteCriado.Idcliente }, clienteCriado);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { erro = ex.Message });
+            }
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Remover(int id)
         {
@@ -57,6 +71,28 @@ namespace APIVendas.Controllers
             catch (Exception ex)
             {
                 return NotFound(new { mensagem = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<ClienteDTO> Atualizar(int id, [FromBody] CriarClienteDTO body)
+        {
+            try
+            {
+                var Response = _clientesServices.Atualizar(body, id);
+                return Ok(Response); //200
+            }
+            catch (NotFoundException C)
+            {
+                return NotFound(C.Message); //404
+            }
+            catch (BadRequestException B)
+            {
+                return BadRequest(B.Message); //400
+            }
+            catch (System.Exception E)
+            {
+                return BadRequest(E.Message); //500
             }
         }
     }

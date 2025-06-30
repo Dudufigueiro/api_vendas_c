@@ -12,7 +12,6 @@ namespace APIVendas.Services.DTOs
 
     public class CriarClienteDTO
     {
-        public DateOnly Datacadastro { get; set; }
         public int Codcliente { get; set; }
         public int Idpessoa { get; set; }
     }

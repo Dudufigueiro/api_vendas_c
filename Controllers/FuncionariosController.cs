@@ -45,6 +45,20 @@ namespace APIVendas.Controllers
             return Ok(funcionario);
         }
 
+        [HttpPost]
+        public ActionResult<FuncionarioDTO> Criar([FromBody] CriarFuncionarioDTO dto)
+        {
+            try
+            {
+                var funcionarioCriado = _funcionariosServices.Criar(dto);
+                return CreatedAtAction(nameof(ObterTodos), new { id = funcionarioCriado.Idfuncionario }, funcionarioCriado);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { erro = ex.Message });
+            }
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Remover(int id)
         {
@@ -56,6 +70,28 @@ namespace APIVendas.Controllers
             catch (Exception ex)
             {
                 return NotFound(new { mensagem = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<FuncionarioDTO> Atualizar(int id, [FromBody] CriarFuncionarioDTO body)
+        {
+            try
+            {
+                var Response = _funcionariosServices.Atualizar(body, id);
+                return Ok(Response); //200
+            }
+            catch (NotFoundException C)
+            {
+                return NotFound(C.Message); //404
+            }
+            catch (BadRequestException B)
+            {
+                return BadRequest(B.Message); //400
+            }
+            catch (System.Exception E)
+            {
+                return BadRequest(E.Message); //500
             }
         }
     }

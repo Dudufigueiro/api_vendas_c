@@ -36,6 +36,20 @@ namespace APIVendas.Services
             return _mapper.Map<FuncionarioDTO>(funcionario);
         }
 
+        public FuncionarioDTO Criar(CriarFuncionarioDTO dto)
+        {
+            FuncionarioValidation.ValidouCriarFuncionario(dto);
+
+            var novoFuncionario = _mapper.Map<Funcionarios>(dto);
+
+            novoFuncionario.Datacadastro = DateOnly.FromDateTime(DateTime.Now);
+
+            _dbcontext.Funcionarios.Add(novoFuncionario);
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<FuncionarioDTO>(novoFuncionario);
+        }
+
         public void Remover(int id)
         {
             var funcionario = _dbcontext.Funcionarios.FirstOrDefault(c => c.Idfuncionario == id);
@@ -44,6 +58,22 @@ namespace APIVendas.Services
 
             _dbcontext.Funcionarios.Remove(funcionario);
             _dbcontext.SaveChanges();
+        }
+
+        public FuncionarioDTO Atualizar(CriarFuncionarioDTO dto, int id)
+        {
+            FuncionarioValidation.ValidouCriarFuncionario(dto);
+
+            var funcionario = _dbcontext.Funcionarios.FirstOrDefault(c => c.Idfuncionario == id);
+
+            if (funcionario == null)
+                throw new NotFoundException("Funcionario não encontrado");
+
+            _mapper.Map(dto, funcionario);
+
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<FuncionarioDTO>(funcionario);
         }
     }
 }

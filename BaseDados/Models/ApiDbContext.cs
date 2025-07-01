@@ -127,9 +127,9 @@ public partial class ApiDbContext : DbContext
 
         modelBuilder.Entity<VendaProduto>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("venda_produto");
+            entity.ToTable("venda_produto");
+
+            entity.HasKey(e => new { e.Idvenda, e.Idproduto });
 
             entity.Property(e => e.Idproduto).HasColumnName("idproduto");
             entity.Property(e => e.Idvenda).HasColumnName("idvenda");

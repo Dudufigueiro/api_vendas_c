@@ -1,4 +1,5 @@
 ﻿using System;
+using APIVendas.BaseDados.Models;
 
 namespace APIVendas.Services.DTOs
 {
@@ -11,5 +12,8 @@ namespace APIVendas.Services.DTOs
         public double Valor { get; set; }
 
         public int Idvenda { get; set; }
+
+        public Produto IdprodutoNavigation { get; set; }
+        public Venda IdvendaNavigation { get; set; }
     }
 }

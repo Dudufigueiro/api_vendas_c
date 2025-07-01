@@ -9,5 +9,7 @@ namespace APIVendas.Services.DTOs
         public int Quantidade { get; set; }
 
         public double Valor { get; set; }
+
+        public int Idvenda { get; set; }
     }
 }

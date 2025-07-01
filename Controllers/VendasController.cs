@@ -72,5 +72,27 @@ namespace APIVendas.Controllers
                 return NotFound(new { mensagem = ex.Message });
             }
         }
+
+        [HttpPut("{id}")]
+        public ActionResult<VendaDTO> Atualizar(int id, [FromBody] CriarVendaDTO body)
+        {
+            try
+            {
+                var Response = _vendasServices.Atualizar(body, id);
+                return Ok(Response); //200
+            }
+            catch (NotFoundException C)
+            {
+                return NotFound(C.Message); //404
+            }
+            catch (BadRequestException B)
+            {
+                return BadRequest(B.Message); //400
+            }
+            catch (System.Exception E)
+            {
+                return BadRequest(E.Message); //500
+            }
+        }
     }
 }

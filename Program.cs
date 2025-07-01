@@ -24,6 +24,7 @@ namespace APIVendas
             builder.Services.AddScoped<ClientesServices>();
             builder.Services.AddScoped<FuncionariosServices>();
             builder.Services.AddScoped<VendasServices>();
+            builder.Services.AddScoped<VendaProdutosServices>();
             builder.Services.AddSingleton<ApiDbContext>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -62,5 +62,26 @@ namespace APIVendas.Services
             _dbcontext.Venda.Remove(venda);
             _dbcontext.SaveChanges();
         }
+
+        public VendaDTO Atualizar(CriarVendaDTO dto, int id)
+        {
+            VendaValidation.ValidouCriarVenda(dto);
+
+            var venda = _dbcontext.Venda.FirstOrDefault(c => c.Idvenda == id);
+
+            if (venda == null)
+                throw new NotFoundException("Venda não encontrada");
+
+            _mapper.Map(dto, venda);
+
+            if (string.IsNullOrEmpty(dto.Data) || dto.Data.ToLower() == "string")
+            {
+                venda.Data = DateOnly.FromDateTime(DateTime.Now).ToString("yyyy-MM-dd");
+            }
+
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<VendaDTO>(venda);
+        }
     }
 }

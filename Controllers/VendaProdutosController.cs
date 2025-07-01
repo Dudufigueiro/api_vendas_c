@@ -33,6 +33,20 @@ namespace APIVendas.Controllers
             return Ok(produtos);
         }
 
+        [HttpPost]
+        public ActionResult<VendaProdutoDTO> Criar(int id, [FromBody] CriarVendaProdutoDTO dto)
+        {
+            try
+            {
+                var vendaProdutoCriado = _vendaProdutosServices.Criar(dto, id);
+                return Ok(vendaProdutoCriado);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { erro = ex.Message });
+            }
+        }
+
         [HttpDelete("{idProduto}")]
 
         public IActionResult RemoverProduto(int id, int idProduto)

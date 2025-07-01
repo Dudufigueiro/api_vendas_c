@@ -27,6 +27,7 @@ namespace APIVendas.Mappings
             CreateMap<CriarVendaDTO, Venda>().ReverseMap();
 
             CreateMap<VendaProduto, VendaProdutoDTO>().ReverseMap();
+            CreateMap<CriarVendaProdutoDTO, VendaProduto>().ReverseMap();
         }
     }
 }

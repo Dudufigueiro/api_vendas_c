@@ -16,4 +16,13 @@ namespace APIVendas.Services.DTOs
         public Produto IdprodutoNavigation { get; set; }
         public Venda IdvendaNavigation { get; set; }
     }
+
+    public class CriarVendaProdutoDTO
+    {
+        public int Idproduto { get; set; }
+
+        public int Quantidade { get; set; }
+
+        public double Valor { get; set; }
+    }
 }

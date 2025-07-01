@@ -32,6 +32,20 @@ namespace APIVendas.Services
             return _mapper.Map<List<VendaProdutoDTO>>(vendaProdutos);
         }
 
+        public VendaProdutoDTO Criar(CriarVendaProdutoDTO dto, int idVenda)
+        {
+            VendaProdutoValidation.ValidouCriarVendaProduto(dto);
+
+            var novaVendaProduto = _mapper.Map<VendaProduto>(dto);
+
+            novaVendaProduto.Idvenda = idVenda;
+
+            _dbcontext.VendaProdutos.Add(novaVendaProduto);
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<VendaProdutoDTO>(novaVendaProduto);
+        }
+
         public void RemoverProdutoDaVenda(int idVenda, int idProduto)
         {
             var venda = _dbcontext.Venda.Find(idVenda);

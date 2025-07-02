@@ -34,7 +34,7 @@ namespace APIVendas.Controllers
             return Ok(categorias);
         }
 
-        [HttpGet("{id}")] // get que busca pelo id
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CategoriaDTO> GetById(int id)
@@ -42,7 +42,7 @@ namespace APIVendas.Controllers
             var categoria = _categoriaService.ObterPorId(id);
             if (categoria == null)
             {
-                return NotFound($"Categoria com ID {id} não encontrado."); // se não encontrar o cliente pelo id especificado, retorna erro
+                return NotFound($"Categoria com ID {id} não encontrado.");
             }
 
             return Ok(categoria);
@@ -72,7 +72,7 @@ namespace APIVendas.Controllers
             try
             {
                 _categoriaService.Remover(id);
-                return NoContent(); // 204 - sucesso, sem conteúdo
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -81,6 +81,9 @@ namespace APIVendas.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CategoriaDTO> Atualizar(int id, [FromBody] CriarCategoriaDTO body)
         {
             try
@@ -95,10 +98,6 @@ namespace APIVendas.Controllers
             catch (BadRequestException B)
             {
                 return BadRequest(B.Message); //400
-            }
-            catch (System.Exception E)
-            {
-                return BadRequest(E.Message); //500
             }
         }
     }

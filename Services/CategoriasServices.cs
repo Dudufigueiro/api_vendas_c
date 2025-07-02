@@ -23,7 +23,7 @@ namespace APIVendas.Services
 
         public List<CategoriaDTO> ObterTodos()
         {
-            var categorias = _dbcontext.Categoria.ToList(); // Verifique se o DbSet chama "Categorias"
+            var categorias = _dbcontext.Categoria.ToList();
             return _mapper.Map<List<CategoriaDTO>>(categorias);
         }
 
@@ -31,13 +31,11 @@ namespace APIVendas.Services
         {
             CategoriaValidation.ValidouCriarCategoria(dto);
 
-            // Usa o AutoMapper para converter o DTO para a entidade
             var novaCategoria = _mapper.Map<Categoria>(dto);
 
             _dbcontext.Categoria.Add(novaCategoria);
             _dbcontext.SaveChanges();
 
-            // Usa o AutoMapper para converter de volta para DTO de leitura
             return _mapper.Map<CategoriaDTO>(novaCategoria);
         }
 
@@ -45,7 +43,7 @@ namespace APIVendas.Services
         {
             var categoria = _dbcontext.Categoria.FirstOrDefault(c => c.Id == id);
             if (categoria == null)
-                throw new Exception($"Cliente com ID {id} não encontrado.");
+                throw new Exception($"Categoria com o ID {id} não encontrada.");
 
             _dbcontext.Categoria.Remove(categoria);
             _dbcontext.SaveChanges();
@@ -58,9 +56,8 @@ namespace APIVendas.Services
             var categoria = _dbcontext.Categoria.FirstOrDefault(c => c.Id == id);
 
             if (categoria == null)
-                throw new NotFoundException("Cliente não encontrado");
+                throw new NotFoundException("Categoria não encontrada");
 
-            // Mapeia os dados do DTO para a entidade já existente
             _mapper.Map(dto, categoria);
 
             _dbcontext.SaveChanges();

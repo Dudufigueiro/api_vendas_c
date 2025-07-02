@@ -16,7 +16,7 @@ namespace APIVendas
 
             // Add services to the container.
 
-            builder.Services.AddControllers().AddXmlSerializerFormatters();
+            builder.Services.AddControllers().AddXmlSerializerFormatters(); //
             builder.Services.AddAutoMapper(typeof(DomainToDTOMapping));
             builder.Services.AddScoped<CategoriasService>();
             builder.Services.AddScoped<ProdutosServices>();

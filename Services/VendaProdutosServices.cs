@@ -62,5 +62,28 @@ namespace APIVendas.Services
             _dbcontext.SaveChanges();
         }
 
+        public VendaProdutoDTO Atualizar(int idVenda, int idProduto, CriarVendaProdutoDTO dto)
+        {
+            var venda = _dbcontext.Venda.Find(idVenda);
+            if (venda == null)
+                throw new NotFoundException("Venda não encontrada.");
+
+            var vendaProduto = _dbcontext.VendaProdutos
+                .FirstOrDefault(vp => vp.Idvenda == idVenda && vp.Idproduto == idProduto);
+
+            if (vendaProduto == null)
+                throw new NotFoundException("Produto não encontrado nesta venda.");
+
+            // Atualiza os campos (ex: quantidade, valor, etc)
+            _mapper.Map(dto, vendaProduto);
+
+            // Reafirma o relacionamento
+            vendaProduto.Idvenda = idVenda;
+            vendaProduto.Idproduto = idProduto;
+
+            _dbcontext.SaveChanges();
+
+            return _mapper.Map<VendaProdutoDTO>(vendaProduto);
+        }
     }
 }

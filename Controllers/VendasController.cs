@@ -33,19 +33,23 @@ namespace APIVendas.Controllers
             return Ok(venda);
         }
 
-        [HttpGet("{id}")] // get que busca pelo id
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<VendaDTO> GetById(int id)
         {
             var venda = _vendasServices.ObterPorId(id);
             if (venda == null)
             {
-                return NotFound($"Cliente com ID {id} não encontrado."); // se não encontrar o cliente pelo id especificado, retorna erro
+                return NotFound($"Venda com ID {id} não encontrada.");
             }
 
             return Ok(venda);
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<VendaDTO> Criar([FromBody] CriarVendaDTO dto)
         {
             try
@@ -60,6 +64,8 @@ namespace APIVendas.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Remover(int id)
         {
             try
@@ -74,6 +80,9 @@ namespace APIVendas.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<VendaDTO> Atualizar(int id, [FromBody] CriarVendaDTO body)
         {
             try
@@ -88,10 +97,6 @@ namespace APIVendas.Controllers
             catch (BadRequestException B)
             {
                 return BadRequest(B.Message); //400
-            }
-            catch (System.Exception E)
-            {
-                return BadRequest(E.Message); //500
             }
         }
     }

@@ -34,6 +34,8 @@ namespace APIVendas.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<VendaProdutoDTO> Criar(int id, [FromBody] CriarVendaProdutoDTO dto)
         {
             try
@@ -48,7 +50,8 @@ namespace APIVendas.Controllers
         }
 
         [HttpDelete("{idProduto}")]
-
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult RemoverProduto(int id, int idProduto)
         {
             try
@@ -61,5 +64,27 @@ namespace APIVendas.Controllers
                 return NotFound(new { erro = ex.Message });
             }
         }
+
+        [HttpPut("{idProduto}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<VendaProdutoDTO> Atualizar(int id, int idProduto, [FromBody] CriarVendaProdutoDTO dto)
+        {
+            try
+            {
+                var atualizado = _vendaProdutosServices.Atualizar(id, idProduto, dto);
+                return Ok(atualizado);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { erro = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { erro = ex.Message });
+            }
+        }
+
     }
 }

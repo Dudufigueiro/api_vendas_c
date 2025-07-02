@@ -33,19 +33,23 @@ namespace APIVendas.Controllers
             return Ok(categorias);
         }
 
-        [HttpGet("{id}")] // get que busca pelo id
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<ProdutoDTO> GetById(int id)
         {
             var produto = _produtoService.ObterPorId(id);
             if (produto == null)
             {
-                return NotFound($"Categoria com ID {id} não encontrado."); // se não encontrar o cliente pelo id especificado, retorna erro
+                return NotFound($"Produto com ID {id} não encontrado.");
             }
 
             return Ok(produto);
         }
 
         [HttpGet("categoria/{idcategoria}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<ProdutoDTO>> GetPorCategoria(int idcategoria)
         {
             var produtos = _produtoService.ObterPorCategoria(idcategoria);
@@ -57,6 +61,8 @@ namespace APIVendas.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ProdutoDTO> Criar([FromBody] CriarProdutoDTO dto)
         {
             try
@@ -66,12 +72,13 @@ namespace APIVendas.Controllers
             }
             catch (System.Exception ex)
             {
-                // Aqui você pode melhorar para retornar mensagens mais detalhadas se desejar
                 return BadRequest(new { erro = ex.Message });
             }
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Remover(int id)
         {
             try
@@ -86,6 +93,9 @@ namespace APIVendas.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<ProdutoDTO> Atualizar(int id, [FromBody] CriarProdutoDTO body)
         {
             try
@@ -100,10 +110,6 @@ namespace APIVendas.Controllers
             catch (BadRequestException B)
             {
                 return BadRequest(B.Message); //400
-            }
-            catch (System.Exception E)
-            {
-                return BadRequest(E.Message); //500
             }
         }
     }

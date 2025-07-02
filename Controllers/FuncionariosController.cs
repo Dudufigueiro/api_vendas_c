@@ -33,19 +33,23 @@ namespace APIVendas.Controllers
             return Ok(funcionario);
         }
 
-        [HttpGet("{id}")] // get que busca pelo id
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<FuncionarioDTO> GetById(int id)
         {
             var funcionario = _funcionariosServices.ObterPorId(id);
             if (funcionario == null)
             {
-                return NotFound($"Cliente com ID {id} não encontrado."); // se não encontrar o cliente pelo id especificado, retorna erro
+                return NotFound($"Funcionario com o ID {id} não encontrado.");
             }
 
             return Ok(funcionario);
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<FuncionarioDTO> Criar([FromBody] CriarFuncionarioDTO dto)
         {
             try
@@ -60,6 +64,8 @@ namespace APIVendas.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Remover(int id)
         {
             try
@@ -74,6 +80,9 @@ namespace APIVendas.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<FuncionarioDTO> Atualizar(int id, [FromBody] CriarFuncionarioDTO body)
         {
             try
@@ -88,10 +97,6 @@ namespace APIVendas.Controllers
             catch (BadRequestException B)
             {
                 return BadRequest(B.Message); //400
-            }
-            catch (System.Exception E)
-            {
-                return BadRequest(E.Message); //500
             }
         }
     }

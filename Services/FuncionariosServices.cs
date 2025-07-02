@@ -54,7 +54,7 @@ namespace APIVendas.Services
         {
             var funcionario = _dbcontext.Funcionarios.FirstOrDefault(c => c.Idfuncionario == id);
             if (funcionario == null)
-                throw new Exception($"Cliente com ID {id} não encontrado.");
+                throw new Exception($"Funcionario com o ID {id} não encontrado.");
 
             _dbcontext.Funcionarios.Remove(funcionario);
             _dbcontext.SaveChanges();

@@ -23,7 +23,7 @@ namespace APIVendas.Services
 
         public List<ProdutoDTO> ObterTodos()
         {
-            var produtos = _dbcontext.Produtos.ToList(); // Verifique se o DbSet chama "Categorias"
+            var produtos = _dbcontext.Produtos.ToList();
             return _mapper.Map<List<ProdutoDTO>>(produtos);
         }
 
@@ -63,7 +63,7 @@ namespace APIVendas.Services
         {
             var produto = _dbcontext.Produtos.FirstOrDefault(c => c.Idproduto == id);
             if (produto == null)
-                throw new Exception($"Cliente com ID {id} não encontrado.");
+                throw new Exception($"Produto com ID {id} não encontrado.");
 
             _dbcontext.Produtos.Remove(produto);
             _dbcontext.SaveChanges();
